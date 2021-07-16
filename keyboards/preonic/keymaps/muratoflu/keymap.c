@@ -82,7 +82,8 @@ uint16_t random_keycode(void) {
 #define MT_MSSH MT(MOD_RSFT, KC_EQUAL)  // Tap for equal, hold for shift
 #define MT_SHGR MT(MOD_RSFT, KC_GRAVE)  // Tap for grave, hold for shift
 #define MT_SHCL MT(MOD_LSFT, KC_CAPS)   // Tap for caps lock, hold for shift
-#define MT_SHMN MT(MOD_LSFT, KC_MINUS)   // Tap for caps lock, hold for shift
+//#define MT_SHMN MT(MOD_LSFT, KC_MINUS)   // Tap for caps lock, hold for shift
+#define MT_SHMN MT(MOD_LSFT, KC_PGDN)   // Tap for page down, hold for shift
 #define MT_SHCR MT(MOD_RSFT, KC_BSLASH)   // Tap for bslash, hold for shift
 
 #define MT_HILF S(A(KC_LEFT))           // Press for shift + alt + left
@@ -108,7 +109,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
  * |   +   |   A   |   S   |   D   |   F   |   G   |   H   |   J   |   K   |   L   |   ;   |  ENT  |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * |- / LSH|   Z   |   X   |   C   |   V   |   B   |   N   |   M   |   \   |   ,   |   .   | SF/ \ |
+ * |- / LSH|   Z   |   X   |   C   |   V   |   B   |   N   |   M   |   ,   |   .   |   /   | SF/ \ |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
  * |  LCTL |       |  GUI  |  ALT  | ( LSFT|     SP/LW     | ) RSFT|   ←   |   ↑   |   ↓   |   →   |
  * `-----------------------------------------------------------------------------------------------
@@ -118,9 +119,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*01           02           03           04           05           06           07           08          09          10          11          12         */
   KC_ESC,      KC_1,        KC_2,        KC_3,        KC_4,        KC_5,        KC_6,        KC_7,       KC_8,       KC_9,       KC_0,       KC_BSPACE, \
   KC_TAB,      KC_Q,        KC_W,        KC_E,        KC_R,        KC_T,        KC_Y,        KC_U,       KC_I,       KC_O,       KC_P,       KC_DEL,    \
-  KC_EQUAL,    KC_A,        KC_S,        KC_D,        KC_F,        KC_G,        KC_H,        KC_J,       KC_K,       KC_L,       KC_SCLN,    KC_ENT,    \
-  MT_SHMN,    KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,       KC_COMM,    KC_DOT,     KC_SLSH,    MT_SHCR,   \
-  KC_LCTL,     TT(L_ADJUST),KC_LGUI,     KC_LALT,     KC_LSPO,     LT1_SPC,     LT1_SPC,     KC_RSPC,    KC_LEFT,    KC_DOWN,    KC_UP,      KC_RGHT   \
+  KC_PGUP,     KC_A,        KC_S,        KC_D,        KC_F,        KC_G,        KC_H,        KC_J,       KC_K,       KC_L,       KC_SCLN,    KC_ENT,    \
+  MT_SHMN,     KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,       KC_COMM,    KC_DOT,     KC_SLSH,    MT_SHCR,   \
+//KC_LCTL,     TT(L_ADJUST),KC_LGUI,     KC_LALT,     KC_LSPO,     LT1_SPC,     LT1_SPC,     KC_RSPC,    KC_LEFT,    KC_DOWN,    KC_UP,      KC_RGHT
+  KC_LCTL,     KC_LBRC,     KC_RBRC,     KC_LALT,     LT1_SPC,     LT1_SPC,     LT2_ENT,     LT2_ENT,    KC_LEFT,    KC_DOWN,    KC_UP,      KC_RGHT   \
 ),
 
 
@@ -141,12 +143,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [L_LOWER] = LAYOUT_preonic_grid(
-/*01          02          03          04          05          06          07          08          09          10          11          12         */
-  KC_F12,     KC_F1,      KC_F2,      KC_F3,      KC_F4,      KC_F5,      KC_F6,      KC_F7,      KC_F8,      KC_F9,      KC_F10,     KC_F11,    \
-  MT_UNTB,    S(KC_1),    S(KC_2),    S(KC_3),    S(KC_4),    S(KC_5),    S(KC_6),    S(KC_7),    S(KC_MINUS),S(KC_EQUAL),MY_DQUO,    MY_TILD,   \
-  LG_ZMIN,    MT_HILF,    MT_HIRT,    _______,    _______,    _______,    _______,    _______,    KC_MINUS,   KC_EQUAL,   MY_QUOT,    MY_GRV,    \
-  LG_ZMOT,    _______,    _______,    _______,    S(KC_LBRC), MY_RNDM,    _______,    S(KC_RBRC), S(KC_COMM), S(KC_DOT),  S(KC_SLSH), KC_PIPE,   \
-  LG_ZMEX,    MY_RNDM,    _______,    _______,    KC_LBRC,    _______,    _______,    KC_RBRC,    KC_HOME,    KC_PGDN,    KC_PGUP,    KC_END     \
+/*01          02          03          04          05          06                07          08          09          10          11          12         */
+  KC_F12,     KC_F1,      KC_F2,      KC_F3,      KC_F4,      KC_F5,            KC_F6,      KC_F7,      KC_F8,      KC_F9,      KC_F10,     KC_F11,    \
+  MT_UNTB,    S(KC_1),    S(KC_2),    S(KC_3),    S(KC_4),    S(KC_5),          S(KC_6),    S(KC_7),    S(KC_MINUS),S(KC_EQUAL),MY_DQUO,    MY_TILD,   \
+  LG_ZMIN,    LCTL(KC_A), LCTL(KC_S), LGUI(KC_D), LCTL(KC_F), _______,          _______,    _______,    KC_MINUS,   KC_EQUAL,   MY_QUOT,    MY_GRV,    \
+  LG_ZMOT,    LCTL(KC_Z), LCTL(KC_X), LCTL(KC_C), LCTL(KC_V), LCTL(KC_DOT),     MT_HILF,    MT_HIRT,    S(KC_COMM), S(KC_DOT),  S(KC_SLSH), KC_PIPE,   \
+  LG_ZMEX,    S(KC_LBRC), S(KC_RBRC), MY_RNDM,    _______,    _______,          _______,    _______,    KC_HOME,    KC_PGDN,    KC_PGUP,    KC_END     \
 ),
 
 
@@ -164,7 +166,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
  * |  CAP  |       |       |       |       |       |       |   1   |   2   |   3   |   /   |       |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * |       |       |       |       |       |       |       |       |   0   |   .   |   ,   |       |
+ * |       |       |       |       |       |       |       |       |   0   |   .   |   ,   |       |)
  * `-----------------------------------------------------------------------------------------------'
  */
 [L_RAISE] = LAYOUT_preonic_grid(
