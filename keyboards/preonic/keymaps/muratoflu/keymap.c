@@ -18,15 +18,11 @@ enum layer_names {
     L_ADJUST,
 };
 
-
-
-
 /* TAP DANCE
    ==========================================================================
    1. Define TD names here
    2. Register action in tap_dance_actions[]
    ========================================================================== */
-
 enum {
   TD_BRC = 0,
   TD_MIN,
@@ -34,11 +30,26 @@ enum {
   TD_BS
 };
 
+/* Custom Macros
+   ==========================================================================
+   1. Define Macro names here
+   2. Register action in process_record_user()
+   ========================================================================== */
 enum custom_keycodes {
-    QMKBEST = SAFE_RANGE,
-    QMKURL,
-    MY_OTHER_MACRO,
+    MY_DQUO = SAFE_RANGE,
+    MY_QUOT,
+    MY_GRV,
+    MY_TILD,
+    MY_RNDM
 };
+
+// Random string stuff
+static int lower = (int) KC_A;
+static int upper = (int) KC_Z;
+uint16_t random_keycode(void) {
+  return lower + (rand() % (upper - lower + 1));
+};
+// Random string stuff end
 
 
 /* CUSTOM KEYMAPS
@@ -51,12 +62,15 @@ enum custom_keycodes {
 
 // Layers
 #define LT1_TAB LT(L_LOWER, KC_TAB)     // Tap for tab, hold for LOWER
+#define LT2_ESC LT(L_RAISE, KC_ESC)     // Tap for esc, hold for RAISE
 #define LT2_ENT LT(L_RAISE, KC_ENT)     // Tap for enter, hold for RAISE
 #define LT1_DEL LT(L_LOWER, KC_DEL)     // Tap for del, hold for LOWER
 #define LT2_BSP LT(L_RAISE, KC_BSPACE)     // Tap for bsp, hold for RAISE
 #define LT1_SPC LT(L_LOWER, KC_SPC)     // Tap for space, hold for LOWER
-#define LT2_LPRN LT(L_RAISE, KC_LPRN)     // Tap for (, hold for RAISE
-#define LT3_RPRN LT(L_ADJUST, KC_RPRN)     // Tap for ), hold for ADJUST
+#define LT2_LPRN LT(L_RAISE, S(KC_LPRN))    // Tap for (, hold for RAISE
+#define LT3_RPRN LT(L_ADJUST, S(KC_RPRN))     // Tap for ), hold for ADJUST
+
+#define LT3_RNDM LT(L_ADJUST, MY_RNDM)     // Tap for random laugh, hold for ADJUST
 
 // Modifiers
 #define LG_ZMIN LGUI(KC_EQUAL)          // Command + plus (zoom in)
@@ -68,7 +82,8 @@ enum custom_keycodes {
 #define MT_MSSH MT(MOD_RSFT, KC_EQUAL)  // Tap for equal, hold for shift
 #define MT_SHGR MT(MOD_RSFT, KC_GRAVE)  // Tap for grave, hold for shift
 #define MT_SHCL MT(MOD_LSFT, KC_CAPS)   // Tap for caps lock, hold for shift
-#define MT_SHCR MT(MOD_RSFT, KC_SLSH)   // Tap for slash, hold for shift
+#define MT_SHMN MT(MOD_LSFT, KC_MINUS)   // Tap for caps lock, hold for shift
+#define MT_SHCR MT(MOD_RSFT, KC_BSLASH)   // Tap for bslash, hold for shift
 
 #define MT_HILF S(A(KC_LEFT))           // Press for shift + alt + left
 #define MT_HIRT S(A(KC_RGHT))           // Press for shift + alt + right
@@ -87,25 +102,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* QWERTY
  * ,-----------------------------------------------------------------------------------------------.
- * | ` ESC |  1 !  |  2 @  |  3 #  |  4 $  |  5 %  |  6 ^  |  7 &  |  8 *  |  9 (  |  0 )  |  BSP  |
+ * | ESC RS|  1 !  |  2 @  |  3 #  |  4 $  |  5 %  |  6 ^  |  7 &  |  8 *  |  9 (  |  0 )  | BSP RS|
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * |  TAB  |   Q   |   W   |   E   |   R   |   T   |   Y   |   U   |   I   |   O   |   P   |  DEL  |
+ * | TAB LW|   Q   |   W   |   E   |   R   |   T   |   Y   |   U   |   I   |   O   |   P   | DEL LW|
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * | BS/LW |   A   |   S   |   D   |   F   |   G   |   H   |   J   |   K   |   L   |   ;   |  ENT  |
+ * |   +   |   A   |   S   |   D   |   F   |   G   |   H   |   J   |   K   |   L   |   ;   |  ENT  |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * |  SFT  |   Z   |   X   |   C   |   V   |   B   |   N   |   M   |   \   |   ,   |   .   | SF/ / |
+ * |- / LSH|   Z   |   X   |   C   |   V   |   B   |   N   |   M   |   \   |   ,   |   .   | SF/ \ |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * | LCTL  |       |  GUI  |  ALT  | ( LT2 |     SP/LW     | ) LT3 |   ←   |   ↑   |   ↓   |   →   |
+ * |  LCTL |       |  GUI  |  ALT  | ( LSFT|     SP/LW     | ) RSFT|   ←   |   ↑   |   ↓   |   →   |
  * `-----------------------------------------------------------------------------------------------
  */
 
 [L_QWERTY] = LAYOUT_preonic_grid(
-/*01          02          03          04          05          06          07          08          09          10          11          12         */
-  KC_ESC,     KC_1,       KC_2,       KC_3,       KC_4,       KC_5,       KC_6,       KC_7,       KC_8,       KC_9,       KC_0,       KC_BSPACE, \
-  KC_TAB,     KC_Q,       KC_W,       KC_E,       KC_R,       KC_T,       KC_Y,       KC_U,       KC_I,       KC_O,       KC_P,       KC_DEL,    \
-  _______,    KC_A,       KC_S,       KC_D,       KC_F,       KC_G,       KC_H,       KC_J,       KC_K,       KC_L,       KC_SCLN,    KC_ENT,    \
-  KC_LSFT,    KC_Z,       KC_X,       KC_C,       KC_V,       KC_B,       KC_N,       KC_M,       KC_BSLASH,  KC_COMM,    KC_DOT,     MT_SHCR,   \
-  KC_LCTL,    _______,    KC_LGUI,    KC_LALT,    LT2_LPRN,   LT1_SPC,    LT1_SPC,    LT3_RPRN,    KC_LEFT,    KC_DOWN,    KC_UP,      KC_RGHT   \
+/*01           02           03           04           05           06           07           08          09          10          11          12         */
+  KC_ESC,      KC_1,        KC_2,        KC_3,        KC_4,        KC_5,        KC_6,        KC_7,       KC_8,       KC_9,       KC_0,       KC_BSPACE, \
+  KC_TAB,      KC_Q,        KC_W,        KC_E,        KC_R,        KC_T,        KC_Y,        KC_U,       KC_I,       KC_O,       KC_P,       KC_DEL,    \
+  KC_EQUAL,    KC_A,        KC_S,        KC_D,        KC_F,        KC_G,        KC_H,        KC_J,       KC_K,       KC_L,       KC_SCLN,    KC_ENT,    \
+  MT_SHMN,    KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,       KC_COMM,    KC_DOT,     KC_SLSH,    MT_SHCR,   \
+  KC_LCTL,     TT(L_ADJUST),KC_LGUI,     KC_LALT,     KC_LSPO,     LT1_SPC,     LT1_SPC,     KC_RSPC,    KC_LEFT,    KC_DOWN,    KC_UP,      KC_RGHT   \
 ),
 
 
@@ -119,19 +134,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
  * |       | S+A+← | S+A+→ |       |       |       |       |       |   -   |   =   |   '   |   `   |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * |       |       |       |       |   (   |zoom in|zoom ex|   )   |   |   |   <   |   >   |   ?   |
+ * |       |       |       |       |   {   |zoom in|zoom ex|   }   |   <   |   >   |   ?   |   |   |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * |       |       |       |       |   {   |       |       |   }   |  <<   |page dn|page up|  >>   |
+ * |       |       |       |       |   [   |       |       |   ]   |  <<   |page dn|page up|  >>   |
  * `-----------------------------------------------------------------------------------------------'
  */
 
 [L_LOWER] = LAYOUT_preonic_grid(
 /*01          02          03          04          05          06          07          08          09          10          11          12         */
   KC_F12,     KC_F1,      KC_F2,      KC_F3,      KC_F4,      KC_F5,      KC_F6,      KC_F7,      KC_F8,      KC_F9,      KC_F10,     KC_F11,    \
-  MT_UNTB,    S(KC_1),    S(KC_2),    S(KC_3),    S(KC_4),    S(KC_5),    S(KC_6),    S(KC_7),    S(KC_MINUS),S(KC_EQUAL),KC_DQUO,    KC_TILD,   \
-  _______,    MT_HILF,    MT_HIRT,    _______,    _______,    _______,    _______,    _______,    KC_MINUS,   KC_EQUAL,   KC_QUOT,    KC_GRV,    \
-  _______,    _______,    _______,    _______,    S(KC_LBRC), LG_ZMIN,    LG_ZMEX,    S(KC_RBRC), KC_PIPE,    S(KC_COMM), S(KC_DOT),  S(KC_SLSH),\
-  _______,    _______,    _______,    _______,    KC_LBRC,    _______,    _______,    KC_RBRC,    KC_HOME,    KC_PGDN,    KC_PGUP,    KC_END     \
+  MT_UNTB,    S(KC_1),    S(KC_2),    S(KC_3),    S(KC_4),    S(KC_5),    S(KC_6),    S(KC_7),    S(KC_MINUS),S(KC_EQUAL),MY_DQUO,    MY_TILD,   \
+  LG_ZMIN,    MT_HILF,    MT_HIRT,    _______,    _______,    _______,    _______,    _______,    KC_MINUS,   KC_EQUAL,   MY_QUOT,    MY_GRV,    \
+  LG_ZMOT,    _______,    _______,    _______,    S(KC_LBRC), MY_RNDM,    _______,    S(KC_RBRC), S(KC_COMM), S(KC_DOT),  S(KC_SLSH), KC_PIPE,   \
+  LG_ZMEX,    MY_RNDM,    _______,    _______,    KC_LBRC,    _______,    _______,    KC_RBRC,    KC_HOME,    KC_PGDN,    KC_PGUP,    KC_END     \
 ),
 
 
@@ -156,8 +171,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*01          02          03          04          05          06          07          08          09          10          11          12         */
   KC_ASTG,    KC_F1,      KC_F2,      KC_VOLU,    KC_VOLD,    _______,    _______,    KC_PSLS,    KC_PAST,    KC_LPRN,    KC_RPRN,    _______,    \
   _______,    _______,    _______,    _______,    _______,    _______,    _______,    KC_P7,      KC_P8,      KC_P9,      KC_PLUS,    _______,    \
-  _______,    C(KC_A),    C(KC_S),    _______,    _______,    _______,    _______,    KC_P4,      KC_P5,      KC_P6,      KC_MINUS,   _______,    \
-  KC_CAPS,    C(KC_Z),    C(KC_X),    C(KC_C),    C(KC_V),    _______,    _______,    KC_P1,      KC_P2,      KC_P3,      KC_PSLS,    _______,    \
+  S(KC_EQUAL),C(KC_A),    C(KC_S),    _______,    _______,    _______,    _______,    KC_P4,      KC_P5,      KC_P6,      KC_MINUS,   _______,    \
+  S(KC_MINUS),C(KC_Z),    C(KC_X),    C(KC_C),    C(KC_V),    _______,    _______,    KC_P1,      KC_P2,      KC_P3,      KC_PSLS,    _______,    \
   _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    KC_P0,      KC_PDOT,    KC_COMM,    _______     \
 ),
 
@@ -175,17 +190,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
  * | TOG SF|       |       |       |       |       |       |       |       |       |       |       |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * | DESGN |       |       |       |       |       |       |       |       |       |       |       |
+ * | DESGN |       |       |       |       |       |       |       |       |       |       | RESET |
  * `-----------------------------------------------------------------------------------------------'
  */
 
 [L_ADJUST] = LAYOUT_preonic_grid(
-/*01          02          03          04          05          06          07          08          09          10          11          12         */
-  KC_F12,     KC_F1,      KC_F2,      KC_F3,      KC_F4,      KC_F5,      KC_F6,      KC_F7,      KC_F8,      KC_F9,      KC_F10,     KC_F11,     \
-  _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    \
-  _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    \
-  KC_ASTG,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    \
-  _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______     \
+/*01          02               03          04          05          06          07          08          09          10          11          12         */
+  KC_F12,     KC_F1,           KC_F2,      KC_F3,      KC_F4,      KC_F5,      KC_F6,      KC_F7,      KC_F8,      KC_F9,      KC_F10,     KC_F11,     \
+  _______,    _______,         _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    \
+  _______,    _______,         _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    \
+  KC_ASTG,    _______,         _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    \
+  _______,    DF(L_QWERTY),    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    RESET     \
 )
 
 };
@@ -245,29 +260,47 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-    case QMKBEST:
+    case MY_DQUO:
         if (record->event.pressed) {
             // when keycode QMKBEST is pressed
-            SEND_STRING("QMK is the best thing ever!");
+            SEND_STRING("\" ");
         } else {
             // when keycode QMKBEST is released
         }
         break;
 
-    case QMKURL:
+    case MY_QUOT:
         if (record->event.pressed) {
             // when keycode QMKURL is pressed
-            SEND_STRING("https://qmk.fm/\n");
+            SEND_STRING("' ");
         } else {
             // when keycode QMKURL is released
         }
         break;
 
-    case MY_OTHER_MACRO:
+    case MY_GRV:
         if (record->event.pressed) {
-           SEND_STRING(SS_LCTL("ac")); // selects all and copies
+           SEND_STRING("` "); // selects all and copies
         }
         break;
+
+    case MY_TILD:
+        if (record->event.pressed) {
+           SEND_STRING("~ "); // selects all and copies
+        }
+        break;
+
+    case MY_RNDM:
+          if (record->event.pressed) {
+            // when keycode RANDOMLAUGH is pressed
+            for(int i=0;i<=10;i++) {
+                tap_code(random_keycode());
+            }
+            tap_code(KC_ENT);
+          } else {
+            // when keycode RANDOMLAUGH is released
+          }
+          break;
     }
     return true;
 };
