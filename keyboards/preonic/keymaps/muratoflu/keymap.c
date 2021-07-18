@@ -146,7 +146,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*01          02          03          04          05          06                07          08          09          10          11          12         */
   KC_F12,     KC_F1,      KC_F2,      KC_F3,      KC_F4,      KC_F5,            KC_F6,      KC_F7,      KC_F8,      KC_F9,      KC_F10,     KC_F11,    \
   MT_UNTB,    S(KC_1),    S(KC_2),    S(KC_3),    S(KC_4),    S(KC_5),          S(KC_6),    S(KC_7),    S(KC_MINUS),S(KC_EQUAL),MY_DQUO,    MY_TILD,   \
-  LG_ZMIN,    LCTL(KC_A), LCTL(KC_S), LGUI(KC_D), LCTL(KC_F), _______,          _______,    _______,    KC_MINUS,   KC_EQUAL,   MY_QUOT,    MY_GRV,    \
+  LG_ZMIN,    LCTL(KC_A), LCTL(KC_S), LGUI(KC_D), LCTL(KC_F), LGUI(KC_L),       _______,    _______,    KC_MINUS,   KC_EQUAL,   MY_QUOT,    MY_GRV,    \
   LG_ZMOT,    LCTL(KC_Z), LCTL(KC_X), LCTL(KC_C), LCTL(KC_V), LCTL(KC_DOT),     MT_HILF,    MT_HIRT,    S(KC_COMM), S(KC_DOT),  S(KC_SLSH), KC_PIPE,   \
   LG_ZMEX,    S(KC_LBRC), S(KC_RBRC), MY_RNDM,    _______,    _______,          _______,    _______,    KC_HOME,    KC_PGDN,    KC_PGUP,    KC_END     \
 ),

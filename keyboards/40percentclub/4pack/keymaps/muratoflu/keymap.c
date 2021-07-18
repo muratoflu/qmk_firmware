@@ -30,13 +30,16 @@ uint16_t random_keycode(void) {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
-        BL_TOGG, KC_VOLD, KC_VOLU, LT(1, KC_MPLY)
+        LT(3, KC_MUTE), KC_VOLD, KC_VOLU, LT(1, KC_MPLY)
     ),
     [1] = LAYOUT(
         MACRO1, MACRO2, LT(2, RESET), _______
     ),
     [2] = LAYOUT(
         EEPROM_RESET, RESET, _______, _______
+    ),
+    [3] = LAYOUT(
+        _______, KC_MPRV, KC_MNXT, BL_TOGG
     ),
 };
 
